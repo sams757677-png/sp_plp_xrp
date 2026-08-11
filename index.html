@@ -957,30 +957,44 @@
                 });
             });
 
-            // ========== НОВЫЙ РАЗДЕЛ АРХИВ ==========
-            // Данные для архива (из изображений на странице "Знаки")
-            const archiveItems = [
-                { name: 'Ошибка в номере или профиксе КТК', src: './ktk_standart.html' },
-                { name: 'Дефиктовка КТК с судна на годность', src: './arhiv/2.png' },
-                { name: 'Дефиктовка порожних КТК с города', src: './arhiv/3.png' },
-                { name: 'КТК  с посторонними надписями', src: './arhiv/4.png' },
-                { name: 'Обнаружении отверстия в КТК с судна', src: './arhiv/5.png' },
-                { name: 'Исключить оформление МК и АКТОВ', src: './arhiv/6.png' },
-                { name: 'Судно модуль заплатки', src: './arhiv/7.jpg' },
-                { name: 'Код ISO', src: './arhiv/8.jpg' }               
-            ];
+           // Данные для архива (из изображений на странице "Знаки")
+const archiveItems = [
+    { name: 'Ошибка в номере или профиксе КТК', src: './ktk_standart.html' },
+    { name: 'Дефиктовка КТК с судна на годность', src: './arhiv/2.png' },
+    { name: 'Дефиктовка порожних КТК с города', src: './arhiv/3.png' },
+    { name: 'КТК  с посторонними надписями', src: './arhiv/4.png' },
+    { name: 'Обнаружении отверстия в КТК с судна', src: './arhiv/5.png' },
+    { name: 'Исключить оформление МК и АКТОВ', src: './arhiv/6.png' },
+    { name: 'Судно модуль заплатки', src: './arhiv/7.jpg' },
+    { name: 'Код ISO', src: './arhiv/8.jpg' }               
+];
 
-            // Генерация списка
-            const archiveList = document.getElementById('archiveListContainer');
-            const ul = document.createElement('ul');
-            archiveItems.forEach(item => {
-                const li = document.createElement('li');
-                li.innerHTML = `<img src="${item.src}" alt="${item.name}" loading="lazy"><span>${item.name}</span>`;
-                li.addEventListener('click', () => openImageModal(item.src, item.name));
-                ul.appendChild(li);
-            });
-            archiveList.appendChild(ul);
+// Генерация списка
+const archiveList = document.getElementById('archiveListContainer');
+const ul = document.createElement('ul');
 
+archiveItems.forEach(item => {
+    const li = document.createElement('li');
+    const isLink = item.src.endsWith('.html'); // определяем ссылку по расширению
+
+    if (isLink) {
+        // Создаём ссылку на HTML-страницу
+        const a = document.createElement('a');
+        a.href = item.src;
+        a.textContent = item.name;
+        // Можно открыть в текущем окне или новой вкладке (по желанию)
+        a.target = '_self'; // или '_blank'
+        li.appendChild(a);
+    } else {
+        // Обычный пункт с изображением и модалкой
+        li.innerHTML = `<img src="${item.src}" alt="${item.name}" loading="lazy"><span>${item.name}</span>`;
+        li.addEventListener('click', () => openImageModal(item.src, item.name));
+    }
+
+    ul.appendChild(li);
+});
+
+archiveList.appendChild(ul);
            
         });
     </script>
